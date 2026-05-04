@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Validation</title>
+</head>
+
+<body onload="pageLoaded()">
+
+<form onsubmit="return validateForm()">
+
+    <!-- Name -->
+    Username:
+    <input type="text" id="name" placeholder="Enter Name"
+        onfocus="focusField(this)"
+        onblur="blurField(this)"
+        onkeyup="showLength(this)">
+    <span id="msg"></span>
+    <br><br>
+
+    <!-- Age -->
+    Age:
+    <input type="text" id="age" placeholder="Enter Age"
+        onkeypress="allowOnlyNumbers(event)"
+        onkeyup="liveAgeCheck(this)">
+    <br><br>
+
+    <!-- Country -->
+    Country:
+    <select id="country" onchange="countryChanged(this)">
+        <option value="">Select Country</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+    </select>
+    <br><br>
+
+    <!-- Button -->
+    <button type="submit" onclick="buttonClick()">
+        Submit
+    </button>
+
+</form>
+
+<script>
+
+function pageLoaded() {
+    console.log("Page Loaded");
+}
+
+function focusField(input) {
+    input.style.background = "lightyellow";
+}
+
+function blurField(input) {
+    input.style.background = "white";
+}
+
+function showLength(input) {
+    document.getElementById("msg").innerText =
+        "Length: " + input.value.length;
+}
+
+function allowOnlyNumbers(event) {
+    let char = event.key;
+    if (!/[0-9]/.test(char)) {
+        event.preventDefault();
+    }
+}
+
+function liveAgeCheck(input) {
+    if (input.value < 1 || input.value > 100) {
+        input.style.border = "2px solid red";
+    } else {
+        input.style.border = "2px solid green";
+    }
+}
+
+function countryChanged(select) {
+    alert("You selected: " + select.value);
+}
+
+function buttonClick() {
+    alert("Button Clicked!");
+}
+
+function validateForm() {
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let country = document.getElementById("country").value;
+
+    if (name === "" || age === "" || country === "") {
+        alert("All fields are required!");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
